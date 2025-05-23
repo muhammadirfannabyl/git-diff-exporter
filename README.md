@@ -5,8 +5,13 @@ Export branches diff files into compressed archive
 This bash script gets a list of changed files between two branches, then export them into compressed archive (.zip).
 
 ## Use Case
-- Obtaining only changed files between two branches
-- Apply changed file into a project not having version control software installed.
+- Obtaining only changed files between two branches.
+- Apply changed file into a working directory not having version control software installed.
+
+The use cases are considered to:
+- Simplify manual process of applying changed files into non-version controlled working directory
+- Minimise redundancy in updating changed files into working directory
+- Prevent entire files containing some unintended and untracked changes to be updated into working directory
 
 ## Prerequisite
 - Git

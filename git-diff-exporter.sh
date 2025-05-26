@@ -18,10 +18,10 @@ do
 	read -p "Enter repository name: " REPO_NAME
 	
 	# Check if it's a Git repository
-	if [ -z "${REPO_NAME}" ]; then
+	if [ -z "$REPO_NAME" ]; then
 		echo ""
 		exit 1
-	elif [ ! -d  "${SCRIPT_DIR}/${REPO_NAME}/.git" ]; then
+	elif [ ! -d  "$SCRIPT_DIR/$REPO_NAME/.git" ]; then
 		echo "Error: The specified name is not a Git repository"
 		echo "Please try again"
 		echo ""
@@ -30,9 +30,9 @@ do
 	fi
 done
 
-REPO_DIR="${SCRIPT_DIR}/${REPO_NAME}"
+REPO_DIR="$SCRIPT_DIR/$REPO_NAME"
 
-echo "Repository '${REPO_NAME}' selected"
+echo "Repository '$REPO_NAME' selected"
 echo ""
 
 read -p "Enter first branch name (e.g. main): " BRANCH1
@@ -50,15 +50,15 @@ ZIP_FILE="$REPO_NAME-$DATE.zip"
 OUTPUT_ZIP_FULL_PATH="$SCRIPT_DIR/$ZIP_FILE"
 
 # --- Change directory to the repository ---
-echo "Navigating to repository: ${REPO_DIR}"
-cd "${REPO_DIR}" || { echo "Error: Could not change directory to ${REPO_DIR}. Exiting."; read -p "Press Enter to exit..."; exit 1; }
+echo "Navigating to repository: $REPO_DIR"
+cd "$REPO_DIR" || { echo "Error: Could not change directory to $REPO_DIR. Exiting."; read -p "Press Enter to exit..."; exit 1; }
 
-echo "Generating diff archive from '${BRANCH2}' relative to '${BRANCH1}'..."
+echo "Generating diff archive from '$BRANCH2' relative to '$BRANCH1'..."
 echo "Output will be saved to: $OUTPUT_ZIP_FULL_PATH"
 
 # --- Execute the git archive command ---
 # We use BRANCH2 as the tree-ish for git archive to ensure files are taken from that branch's state
-git archive --format=zip --output="$OUTPUT_ZIP_FULL_PATH" "$BRANCH2" $(git diff --name-only --diff-filter=ACMRT "${BRANCH1}" "${BRANCH2}")
+git archive --format=zip --output="$OUTPUT_ZIP_FULL_PATH" "$BRANCH2" $(git diff --name-only --diff-filter=ACMRT "$BRANCH1" "$BRANCH2")
 
 # --- Check the exit status of the git archive command ---
 if [ $? -eq 0 ]; then

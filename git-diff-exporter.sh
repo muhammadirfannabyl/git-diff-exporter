@@ -13,24 +13,28 @@ echo "Assuming directory: ${SCRIPT_DIR}"
 echo ""
 
 # Check if it's a Git repository
-while :
-do
-	read -p "Enter repository name: " REPO_NAME
-	
-	# Check if it's a Git repository
-	if [ -z "$REPO_NAME" ]; then
-		echo ""
-		exit 1
-	elif [ ! -d  "$SCRIPT_DIR/$REPO_NAME/.git" ]; then
-		echo "Error: The specified name is not a Git repository"
-		echo "Please try again"
-		echo ""
-	else
-		break
-	fi
-done
-
-REPO_DIR="$SCRIPT_DIR/$REPO_NAME"
+if [ -d  ".git" ]; then
+	# get current folder name as repository name
+	REPO_NAME=$(basename "$(pwd)")
+else
+	cd "${SCRIPT_DIR}" || { echo "Error: Could not change directory to ${REPO_DIR}. Exiting."; read -p "Press Enter to exit..."; exit 1; }
+	while :
+	do
+		read -p "Enter repository name: " REPO_NAME
+		
+		# Check if it's a Git repository
+		if [ -z "$REPO_NAME" ]; then
+			echo ""
+			exit 1
+		elif [ ! -d  "$REPO_NAME/.git" ]; then
+			echo "Error: The specified name is not a Git repository"
+			echo "Please try again"
+			echo ""
+		else
+			break
+		fi
+	done
+fi
 
 echo "Repository '$REPO_NAME' selected"
 echo ""

@@ -17,7 +17,7 @@ if [ -d  ".git" ]; then
 	# get current folder name as repository name
 	REPO_NAME=$(basename "$(pwd)")
 else
-	cd "${SCRIPT_DIR}" || { echo "Error: Could not change directory to ${REPO_DIR}. Exiting."; read -p "Press Enter to exit..."; exit 1; }
+	cd "$SCRIPT_DIR" || { echo "Error: Could not change directory to '$REPO_DIR'. Exiting."; read -p "Press Enter to exit..."; exit 1; }
 	while :
 	do
 		read -p "Enter repository name: " REPO_NAME
@@ -54,7 +54,7 @@ ZIP_FILE="$REPO_NAME-$DATE.zip"
 OUTPUT_ZIP_FULL_PATH="$ZIP_FILE"
 
 # --- Change directory to the repository ---
-cd "$REPO_NAME" || { echo "Error: Could not change directory to $REPO_NAME. Exiting."; read -p "Press Enter to exit..."; exit 1; }
+cd "$REPO_NAME" || { echo "Error: Could not change directory to '$REPO_NAME'. Exiting."; read -p "Press Enter to exit..."; exit 1; }
 
 # --- Execute the git archive command ---
 # We use BRANCH2 as the tree-ish for git archive to ensure files are taken from that branch's state
@@ -62,7 +62,7 @@ git archive --format=zip --output="../$OUTPUT_ZIP_FULL_PATH" "$BRANCH2" $(git di
 
 # --- Check the exit status of the git archive command ---
 if [ $? -eq 0 ]; then
-    echo "File is saved as '$SCRIPT_DIR/$ZIP_FILE'"
+    echo "Diff archive is saved as '$SCRIPT_DIR/$ZIP_FILE'"
 else
     echo "Error: Failed to create the zip archive."
     echo "Please ensure the branch names are correct and there are changes between them, or check the repository path."

@@ -59,6 +59,7 @@ cd "$REPO_NAME" || { echo "Error: Could not change directory to '$REPO_NAME'. Ex
 # --- Execute the git archive command ---
 # We use BRANCH2 as the tree-ish for git archive to ensure files are taken from that branch's state
 git archive --format=zip --output="../$OUTPUT_ZIP_FULL_PATH" "$BRANCH2" $(git diff --name-only --diff-filter=ACMRT "$BRANCH1" "$BRANCH2")
+git diff --name-only --diff-filter=ACMRT "$BRANCH1" "$BRANCH2" > "../${REPO_NAME}_changes-$DATE.txt"
 
 # --- Check the exit status of the git archive command ---
 if [ $? -eq 0 ]; then

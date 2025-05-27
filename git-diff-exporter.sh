@@ -47,7 +47,7 @@ echo ""
 
 # --- Generate the current date in the desired format ---
 # For Windows Git Bash, 'date' behaves like a Unix command
-DATE=$(date +"%d%b%Y_%s") # e.g., 22May2025
+DATE=$(date +"%d%b%Y_%I%M%p-%s") # e.g., 01Jan2025_0440PM-1700000000
 
 # --- Construct the output zip file name (full path) ---
 ZIP_FILE="$REPO_NAME-$DATE.zip"
